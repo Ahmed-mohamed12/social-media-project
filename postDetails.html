@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <!-- =============login modals=============== -->
+    <div
+      class="modal fade"
+      id="login-Modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">LOGIN</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  >username:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username-input"
+                  value="fdfdf1f1"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label"
+                  >password:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password-input"
+                  value="123456"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="loginBtnClicked()"
+            >
+              LOGIN
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- =============regester modals=============== -->
+    <div id="liveAlertPlaceholder" class="show fede" style="position: fixed;bottom: 20px;right: 10px;
+  width: 30%;z-index: 90"></div>
+    <div
+      class="modal fade"
+      id="register-Modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">register</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="register-name-input"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  >username:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="register-username-input"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label"
+                  >Email:</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="register-email-input"
+                  value="fdfdf1f1"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label"
+                  >password:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="register-password-input"
+                  value="123456"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label"
+                  >profile img:</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="register-image-input"
+                  value="123456"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="regesterBtnClicked()"
+            >
+              register
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <div class="col-9">
+          <nav
+            class="navbar navbar-expand-lg navbar-light bg-light shadow rounded pt-3"
+          >
+            <div class="container-fluid">
+              <a class="navbar-brand" href="./home.html">Tarmeez</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="./home.html"
+                      >Home</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" onclick="profileClicked()" style="cursor: pointer;">profile</a>
+                  </li>
+                </ul>
+                <div
+                  class="d-flex justify-content-end w-100"
+                  id="btns_logedin"
+                  style="gap: 8px"
+                >
+                  <button
+                    id="login-btn"
+                    type="button"
+                    class="btn btn-outline-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#login-Modal"
+                  >
+                    login
+                  </button>
+
+                  <button
+                    id="regester-btn"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#register-Modal"
+                    class="btn btn-outline-success"
+                  >
+                    regester
+                  </button>
+                </div>
+
+                <div
+                  class="d-flex justify-content-end align-items-center w-100"
+                  style="gap: 8px"
+                  id="logout-div"
+                >
+                  <div
+                    class="d-flex justify-content-end align-items-center"
+                    style="gap: 5px ;cursor: pointer;" onclick="profileClicked()"
+                  >
+                    <img
+                      id="prof-img"
+                      class="rounded-circle"
+                      style="width: 40px; height: 40px"
+                      src="./img/avatar.jpeg"
+                      alt=""
+                    />
+                    <b id="user-name"> </b>
+                  </div>
+                  <button
+                    onclick="logout()"
+                    type="button"
+                    class="btn btn-outline-danger"
+                  >
+                    logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="container mb-3">
+      <!-- user's post -->
+      <div class="row d-flex justify-content-center mt-5">
+        <div class="col-9">
+          <h1 id="username_span"></h1>
+          <div id="post">
+           
+          </div>
+          <div class="comments" id="commentsDiv"></div>
+          <div id="d" style="display: flex ;height: 3rem">
+
+              <!-- <input type="text"value="" id="com-input" class="form-control" placeholder="comment..." style="border: 1px solid gray;" />
+              <button onclick="addcomment()" style=" border: 1px solid gray;
+              padding: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 120px;
+              height: 100%;
+              text-align: center;
+              font-size: 30px;
+              font-weight: bold;" class="rounded btn btn-outline-primary">send</button> -->
+            </div>
+        </div>
+      </div>
+    </div>
+  <script src="./js/main.js"></script>
+
+  </body>
+<script>
+    
+    let id = +window.location.search.slice(8);
+    let username_span = document.getElementById("username_span");
+    let commentsDiv = document.getElementById("commentsDiv");
+    let com_input = document.getElementById("com-input")?.value;
+    let dd = document.getElementById("d");
+    
+    // const token = localStorage.getItem("token");
+    
+    let postDiv = document.getElementById("post");
+    let  showDiv=false
+    // getPost()
+    function getPost() {
+      axios.get(`https://tarmeezacademy.com/api/v1/posts/${id}`)
+      .then((res) => {
+        const post=res.data.data
+        const comments=post.comments
+        const author=post.author
+username_span.innerHTML=`${author.username}'s post`
+let commentsContent=''
+
+for(comment of comments){
+    commentsContent+=`
+    <div class="comment p-3" style="background-color: rgb(235,235,235);">
+            <div>
+                <img src="${comment.author.profile_image}" class="rounded-circle" style="width: 40px;height: 40px;" alt="..">
+                <b>@${comment.author.name}</b>
+
+            </div>
+            <div>
+                ${comment.body}
+            </div>
+        </div>
+    `
+    commentsDiv.innerHTML=commentsContent;
+    dd.style.display = comments.length > 0 ? 'flex' : 'none';
+    
+}
+
+  postDiv.innerHTML = `
+            <div class="card shadow">
+                  <div class="card-header"><img src="${author.profile_image}" alt="" 
+                    style="width: 50px;height: 50px;border-radius: 50%;" class="border border-2"> <b >@${author.name}</b></div>
+                  <div class="card-body">
+                    <img src="${post.image}" alt="img" style="width: 100%;max-width: 100%">
+                    <h6 style="color: rgb(167, 165, 165);">${post.created_at}</h6>
+                    <h5 class="card-title">${post.title}</h5>
+                    <p class="card-text">
+                      ${post.body}
+                    </p>
+                    <hr>
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                        </svg>
+                        <span>(${post.comments_count}) comment</span>
+                      </div>
+                  </div>
+                 
+                </div>
+                
+               
+            
+            `;
+         dd.innerHTML=`
+<input type="text"value="" id="com-input" class="form-control" placeholder="comment..." style="border: 1px solid gray;" />
+              <button onclick="addcomment()" style=" border: 1px solid gray;
+              padding: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 120px;
+              height: 100%;
+              text-align: center;
+              font-size: 30px;
+              font-weight: bold;" class="rounded btn btn-outline-primary">send</button>
+         
+         `
+          showDiv=true
+          
+        });
+       
+    
+    // if(!token&&!showDiv){
+    //   dd.style.setProperty("display", "none","important")
+
+    // }else{
+    //   dd.style.setProperty("display", "flex","important")
+
+
+    // }
+    
+    com_input=''
+  }
+  
+  getPost();
+  // ==================================================add comment===========================================
+  function addcomment() {
+      let com_input = document.getElementById("com-input").value;
+
+      let body = {
+        body: com_input,
+      };
+      axios
+        .post(`https://tarmeezacademy.com/api/v1/posts/${id}/comments`, body, {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+        
+         
+          getPost();
+          document.getElementById("com-input").value = "";
+
+          
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          showSuccessAlert(`oops!,${err.response.data.message}, login requiered`,"danger")
+
+          document.getElementById("com-input").value = "";
+
+        });
+    }
+</script>
+</html>
